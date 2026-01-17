@@ -1332,12 +1332,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!viewport || !canvasEl) return;
     const origW = parseFloat(getComputedStyle(canvasEl).width) || 428;
     const origH = parseFloat(getComputedStyle(canvasEl).height) || 926;
-    const rotatedW = origH;
-    const rotatedH = origW;
     const vpW = viewport.clientWidth;
     const vpH = viewport.clientHeight;
-    const scale = Math.min(vpW / rotatedW, vpH / rotatedH);
-  canvasEl.style.transform = `translate(-50%, -50%) rotate(-90deg) scale(${scale})`;
+    // scale to fit within viewport without rotating
+    const scale = Math.min(vpW / origW, vpH / origH, 1);
+    // keep centered transform but do not rotate
+    canvasEl.style.transform = `translate(-50%, -50%) scale(${scale})`;
   }
 
   window.addEventListener('resize', () => {

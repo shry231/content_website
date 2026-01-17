@@ -89,7 +89,7 @@
 
 /* rotate the comments hint text to the left and match the double-tap font/size */
 #commentsHint .hint-text {
-  transform: rotate(-90deg);
+  transform: none;
   transform-origin: center center;
   display: inline-block;
   /* Inherit same styling as .hint-text (color/weight/size) */
@@ -108,10 +108,10 @@
 
 /* Blink animation that preserves the -90deg rotation */
 @keyframes text-blink-rot {
-  0% { transform: rotate(-90deg) scale(1); opacity: 1 }
-  40% { transform: rotate(-90deg) scale(1.12); opacity: 1 }
-  70% { transform: rotate(-90deg) scale(0.98); opacity: 0.9 }
-  100% { transform: rotate(-90deg) scale(1); opacity: 1 }
+  0% { transform: scale(1); opacity: 1 }
+  40% { transform: scale(1.12); opacity: 1 }
+  70% { transform: scale(0.98); opacity: 0.9 }
+  100% { transform: scale(1); opacity: 1 }
 }
 /* Disable blink animation for comments hint (keep original double-tap blinking intact) */
 #commentsHint .hint-text.blink {
@@ -316,8 +316,8 @@ html, body {
   left: 50%;
   top: 50%;
   transform-origin: center center;
-  /* initial transform; a responsive scale will be applied via JS */
-  transform: translate(-50%, -50%) rotate(-90deg) scale(1);
+  /* initial transform; a responsive scale may be applied via JS */
+  transform: translate(-50%, -50%) scale(1);
   background: #fff;
   box-sizing: border-box;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial;
@@ -838,3 +838,45 @@ html, body {
 
 /* Make sure everything is crisp at large pixel dimensions */
 img { image-rendering: -webkit-optimize-contrast; }
+
+/* Make images and videos responsive by default */
+img, video {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Touch-size adjustments and responsive tweaks for small screens */
+@media (max-width: 600px) {
+  /* Make the canvas flow naturally on small screens */
+  #canvas {
+    position: relative;
+    left: auto;
+    top: auto;
+    transform: none;
+    width: 100%;
+    max-width: 428px;
+    height: auto;
+    margin: 0 auto;
+  }
+
+  /* Slightly reduce topbar padding and title size */
+  #topbar { padding: 6px 0; border-bottom-left-radius: 18px; border-bottom-right-radius: 18px; }
+  #title { font-size: 20px; }
+
+  .progress-track { width: 94%; margin-right: 0; }
+
+  .howto-panel { padding: 6px 0; }
+  .howto-inner { padding: 6px 0 10px 0; gap: 6px; }
+  .howto-list-wrapper { width: 86%; }
+
+  /* Larger, finger-friendly buttons */
+  .restart-btn {
+    padding: 14px 22px;
+    min-height: 48px;
+    font-size: 16px;
+  }
+
+  /* make hint text readable on small screens */
+  .hint-text { font-size: 18px; }
+}
